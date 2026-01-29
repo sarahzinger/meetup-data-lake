@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Infinity (Fake Lake)
+    uid: infinity-fakelake
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    isDefault: true
+    editable: true
+    jsonData:
+

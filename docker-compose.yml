@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+
+  fakelake:
+    build:
+      context: ./fakelake
+      dockerfile: Dockerfile
+    container_name: fakelake
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_PLUGINS_PREINSTALL: yesoreyeram-infinity-datasource 
+      GF_FEATURE_TOGGLES_ENABLE: sqlExpressions
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - fakelake
+    restart: unless-stopped
+
+volumes:
+  grafana-data:
