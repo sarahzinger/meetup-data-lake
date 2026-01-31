@@ -40,7 +40,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -132,6 +132,7 @@
             "type": "yesoreyeram-infinity-datasource",
             "uid": "infinity-fakelake"
           },
+          "filterExpression": "metric=='cpu_util'",
           "filters": [],
           "format": "table",
           "global_query_id": "",
@@ -276,5 +277,5 @@
   "timezone": "browser",
   "title": "Fake Lake (Infinity Demo)",
   "uid": "ad9g4cw",
-  "version": 7
+  "version": 1
 }
