@@ -12,13 +12,35 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "filter": {
+          "exclude": false,
+          "ids": [
+            1
+          ]
+        },
+        "hide": false,
+        "iconColor": "orange",
+        "name": "cpu_util",
+        "target": {
+          "limit": 100,
+          "queryType": "annotations",
+          "refId": "Anno",
+          "type": "dashboard"
+        }
       }
     ]
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -78,18 +100,17 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 7,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 1,
       "options": {
         "legend": {
           "calcs": [],
@@ -107,19 +128,20 @@
       "targets": [
         {
           "columns": [],
-          "computed_columns": [],
-          "filterExpression": "metric == \"cpu_util\"",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "infinity-fakelake"
+          },
+          "filterExpression": "metric=='cpu_util'",
           "filters": [],
           "format": "table",
           "global_query_id": "",
           "parser": "backend",
-          "refId": "B",
-          "rootSelector": "rows",
-          "root_selector": "rows",
+          "refId": "A",
+          "root_selector": "",
           "source": "url",
-          "summarizeBy": "",
-          "type": "json",
-          "url": "http://fakelake:8080/query/metrics?limit=1000&sort=ts&order=asc",
+          "type": "csv",
+          "url": "http://fakelake:8080/query/metrics?format=csv&limit=1000&sort=ts&order=desc",
           "url_options": {
             "data": "",
             "method": "GET"
@@ -140,7 +162,17 @@
                 "destinationType": "number",
                 "targetField": "value"
               }
-            ]
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "region"
+            ],
+            "keepFields": false
           }
         }
       ],
@@ -181,27 +213,31 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 7
       },
-      "id": 3,
+      "id": 2,
       "options": {
         "cellHeight": "sm",
-        "frameIndex": 1,
         "showHeader": true
       },
       "pluginVersion": "12.3.0",
       "targets": [
         {
           "columns": [],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "infinity-fakelake"
+          },
+          "filterExpression": "",
           "filters": [],
           "format": "table",
           "global_query_id": "",
+          "hide": true,
           "parser": "backend",
           "refId": "A",
-          "rootSelector": "rows",
           "root_selector": "rows",
           "source": "url",
           "type": "json",
@@ -217,34 +253,29 @@
             "type": "__expr__",
             "uid": "__expr__"
           },
-          "expression": "SELECT\n  *\nFROM\n  A\nWHERE event = \"logout\" AND service = \"worker\"\n",
+          "expression": "SELECT\n  *\nFROM\n  A\nWHERE event = 'logout'",
           "hide": false,
           "refId": "B",
           "type": "sql"
         }
       ],
-      "title": "Just Logouts",
+      "title": "Logouts",
       "type": "table"
     }
   ],
   "preload": false,
-  "refresh": "10s",
   "schemaVersion": 42,
-  "tags": [
-    "demo",
-    "infinity",
-    "fakelake"
-  ],
+  "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "2026-01-12T20:52:31.000Z",
-    "to": "2026-01-14T06:45:37.000Z"
+    "from": "now-24h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Fake Lake (Infinity Demo)",
-  "uid": "fakelake-demo",
+  "uid": "ad9g4cw",
   "version": 1
 }

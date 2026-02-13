@@ -1,0 +1,115 @@
+
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: demo
+      folder: demo
+      interval: 1m
+      rules:
+        - uid: ffbu7b4hsgxz4a
+          title: cpu_util_99
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: infinity-fakelake
+              model:
+                columns:
+                    - selector: ts
+                      text: ""
+                      type: timestamp
+                    - selector: value
+                      text: ""
+                      type: number
+                    - selector: region
+                      text: ""
+                      type: string
+                    - selector: metric
+                      text: ""
+                      type: string
+                    - selector: service
+                      text: ""
+                      type: string
+                computed_columns:
+                    - selector: metric+region+service
+                      text: mrs
+                      type: string
+                filters: []
+                format: timeseries
+                global_query_id: ""
+                intervalMs: 1000
+                maxDataPoints: 43200
+                parser: backend
+                refId: A
+                root_selector: ""
+                source: url
+                summarizeBy: mrs
+                summarizeExpression: max(value)
+                type: csv
+                url: http://fakelake:8080/query/metrics?format=csv&limit=1000&sort=ts&order=desc
+                url_options:
+                    data: ""
+                    method: GET
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 99
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: ad9g4cw
+          panelId: 1
+          noDataState: NoData
+          execErrState: Error
+          annotations:
+            __dashboardUid__: ad9g4cw
+            __panelId__: "1"
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
